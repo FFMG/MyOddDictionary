@@ -37,12 +37,15 @@ packages
 *.lib
 
 # Executables
+output
 *.exe
 *.out
 *.app
 
-# Visual studio fles
+
+# Visual studio/code fles
 .vs
+.vscode
 
 # Build results
 [Dd]ebug/
