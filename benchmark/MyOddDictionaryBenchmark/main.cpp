@@ -32,7 +32,6 @@ std::unordered_map<std::string, int> create_data(int number_of_items)
   {
     data[h.generateRandomString(10)] = h.generateRandomNumber(0, 10);
   }
-
   std::cout << "Create " << number_of_items << " items took " << h.end() << " seconds!\n";
   return data;
 }
@@ -40,17 +39,15 @@ std::unordered_map<std::string, int> create_data(int number_of_items)
 double test_maps(std::unordered_map<std::string, int>& data)
 {
   std::cout << "Map\n";
-  Helper h;
 
   // make a copy
-  h.start();
   auto copy = std::map<std::string, int>();
   for (auto d : data)
   {
     copy[d.first] = d.second;
   }
-  //std::cout << "Map copy took " << h.end() << " seconds!\n";
   
+  Helper h;
   h.start();
   for (auto d : data)
   {
@@ -69,20 +66,19 @@ double test_maps(std::unordered_map<std::string, int>& data)
   return h.end();
 }
 
-double test_unordered_maps(std::unordered_map<std::string, int>& src)
+double test_unordered_maps(std::unordered_map<std::string, int>& data)
 {
   std::cout << "Unordered ma\n";
-  Helper h;
 
   // to be fair we have to shuffle the map
-  auto data = shuffle_data(src);
+  auto shuffled_data = shuffle_data(data);
 
-  // make a copy
-  h.start();
-  auto copy = std::unordered_map<std::string, int>(data);
+  // make a copy of the source
+  auto copy = shuffle_data(data);
 
+  Helper h;
   h.start();
-  for (auto d : data)
+  for (auto d : shuffled_data)
   {
     h.start_single_event();
     auto y = copy.find(d.first);
@@ -102,7 +98,6 @@ double test_unordered_maps(std::unordered_map<std::string, int>& src)
 double test_vectors(std::unordered_map<std::string, int>& data)
 {
   std::cout << "Vector\n";
-  Helper h;
   struct Data
   {
     std::string key;
@@ -110,13 +105,13 @@ double test_vectors(std::unordered_map<std::string, int>& data)
   };
 
   // make a copy
-  h.start();
   auto copy = std::vector<Data>();
   for (auto d : data)
   {
     copy.push_back(Data{ d.first, d.second });
   }
 
+  Helper h;
   h.start();
   for (auto d : data)
   {
